@@ -27,5 +27,7 @@ func main() {
 	}
 
 	fmt.Println("all were queued")
+
+	// wait forever
 	http.ListenAndServe(":10000", nil)
 }
