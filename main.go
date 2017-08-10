@@ -15,6 +15,13 @@ var (
 	numberOfJobs = 1000000 // numberOfJobs is all of jobs that have to work
 )
 
+// Worker is so serious
+// Please Satisfy ME!
+type Worker struct {
+	ID    int
+	Queue chan job.Job
+}
+
 func main() {
 	for i := 0; i < numberOfJobs; i++ {
 		d := time.Duration(rand.Intn(1000)) * time.Millisecond
