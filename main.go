@@ -11,7 +11,7 @@ import (
 
 var (
 	maxWorkers   = 10000   // maxWorkers means how many workers
-	maxQueue     = 1000000 // maxQueue depends on your PCs memory
+	maxQueue     = 100000  // maxQueue depends on your PCs memory
 	numberOfJobs = 1000000 // numberOfJobs is all of jobs that have to work
 )
 
@@ -27,9 +27,10 @@ func main() {
 		d := time.Duration(rand.Intn(1000)) * time.Millisecond
 		j := job.NewJob(i, d)
 
-		// FIXME:
-		// its going to CRASH !!!!!!!!!!
-		go j.Work(0)
+		// SATISFYME:
+		// Implement queue/worker flow
+		// (this will be not going to panic since v1.10??)
+		go j.Work(i)
 		//
 	}
 
