@@ -2,40 +2,33 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"net/http"
+	"sync"
 	"time"
 
 	"github.com/speecan/quiz01/job"
 )
 
 var (
-	maxWorkers   = 10000   // maxWorkers means how many workers
-	maxQueue     = 100000  // maxQueue depends on your PCs memory
-	numberOfJobs = 1000000 // numberOfJobs is all of jobs that have to work
+	maxWorkers   = 1000  // maxWorkers means how many workers
+	maxQueue     = 1000  // maxQueue depends on your PCs memory
+	numberOfJobs = 30000 // numberOfJobs is all of jobs that have to work
 )
 
-// Worker is so serious
-// Please Satisfy ME!
-type Worker struct {
-	ID    int
-	Queue chan job.Job
-}
-
 func main() {
+	wg := &sync.WaitGroup{}
 	for i := 0; i < numberOfJobs; i++ {
-		d := time.Duration(rand.Intn(1000)) * time.Millisecond
-		j := job.NewJob(i, d)
-
+		j := job.NewJob(i, 300*time.Millisecond)
 		// SATISFYME:
-		// Implement queue/worker flow
-		// (this will be not going to panic since v1.10??)
-		go j.Work(i)
+		wg.Add(1) // add worker per job
+		// number of queues = number of jobs
+		// many jobs uses many memories (spending numberOfJobs x about 1 MB)
+		go func(workerID int) {
+			j.Work(workerID)
+			wg.Done()
+		}(i)
 		//
 	}
-
 	fmt.Println("all were queued")
-
-	// wait forever
-	http.ListenAndServe(":10000", nil)
+	// wait for completing jobs
+	wg.Wait()
 }

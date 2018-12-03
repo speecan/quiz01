@@ -15,8 +15,9 @@ func NewJob(id int, duration time.Duration) *Job {
 
 // Job is a heavy work
 type Job struct {
-	ID       int
-	Duration time.Duration
+	ID        int
+	Duration  time.Duration
+	DummyData [1024 * 1024]byte // Job uses 1 MB memory until working
 }
 
 // Work a heavy job

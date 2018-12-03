@@ -1,13 +1,12 @@
 # quiz01
 
-## how to crash
+## how to run
 
 ```bash
 $ go run main.go
-# this will crash!
 ```
 
 ## goal
 
 これはchannelによるキューイング処理のテストコードです。
-channelを使ってcrashしないコードに変更して下さい。
+channelを使ってジョブキューイング(またはキューワーカー)を実装して下さい。
